@@ -1,0 +1,115 @@
+:root {
+  --color-primary: #00398f;
+  --color-grey: #848484;
+
+  --text-default: #272727;
+  --text-grey: #848484;
+  --text-dark-grey: #646464;
+  --text-green: #0a8200;
+  --text-primary: #00398f;
+
+  --background-grey: #f0f0f0;
+  --background-body: #f9faff;
+  --background-block: white;
+
+  --block-radius: 20px;
+  --card-radius: 10px;
+}
+
+/* 1. Box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Improve text rendering */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-default);
+  background-color: var(--background-body);
+}
+
+/* 4. Media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 5. Remove built-in form typography */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 6. Remove list styles */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* 7. Remove anchor underline */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 8. Buttons reset */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 9. Table reset */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 10. Prevent text overflow issues */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 11. Root stacking context */
+#__next {
+  isolation: isolate;
+}
+
+/* Remove default heading sizes */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}

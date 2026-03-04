@@ -1,0 +1,56 @@
+.titleBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  .title {
+    font-size: 2.25rem;
+    font-weight: bold;
+  }
+
+  .clear {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+}
+
+.tagBlock {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  .tagItem {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 0.25rem;
+    font-size: 1rem;
+    border-radius: 8px;
+
+    svg {
+      width: 0.625rem;
+      height: 0.625rem;
+    }
+  }
+}
+
+.collapse {
+  .ant-collapse-header {
+  }
+
+  .itemLabel.itemLabel.itemLabel {
+    font-size: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .menuItem {
+    cursor: pointer;
+
+    .itemText {
+      font-size: 1rem;
+    }
+  }
+}
