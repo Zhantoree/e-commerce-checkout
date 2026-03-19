@@ -1,8 +1,8 @@
 import { type Product, PromoCodeTypes } from "@/entities/product";
+import { FilterProvider } from "./(mainPage)/(providers)/FilterProvider";
 import Filter from "./(mainPage)/(ui)/filter/Filter";
 import ProductList from "./(mainPage)/(ui)/product-list/ProductList";
 import styles from "./(mainPage)/page.module.scss";
-
 const products: Product[] = [
   ...Array.from({ length: 30 }).map((_, i) => ({
     id: `prod-${i + 1}`,
@@ -37,15 +37,14 @@ const products: Product[] = [
     ],
   })),
 ];
+
 export default function Home() {
   return (
     <div className={styles.page}>
-      <aside className={styles.filter}>
+      <FilterProvider>
         <Filter />
-      </aside>
-      <main className={styles.main}>
         <ProductList products={products} />
-      </main>
+      </FilterProvider>
     </div>
   );
 }

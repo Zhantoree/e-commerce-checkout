@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 12px;
+  background: #f7f7f7;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 16px;
+  color: #111;
+}
+
+.input::placeholder {
+  color: rgba(17, 17, 17, 0.45);
+  transition: opacity 160ms ease;
+}
+
+.input:focus::placeholder {
+  opacity: 0.7;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  flex-shrink: 0;
+  font-size: 20px;
+  color: #111;
+}

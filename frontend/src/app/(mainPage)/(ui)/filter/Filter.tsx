@@ -2,10 +2,12 @@
 
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Collapse, Divider, Flex, Tag, Typography } from "antd";
+import { motion } from "motion/react";
 import { Fragment, useState } from "react";
 import { v7 as uid } from "uuid";
 import { filterFieldToTitleMap } from "../../(lib)/filter.constants";
 import { FilterData, FilterTypes } from "../../(model)/types";
+import { defaultFilterValues, useFilter } from "../../(providers)/FilterProvider";
 import styles from "./Filter.module.scss";
 
 // Think about persistence
@@ -39,20 +41,12 @@ const filterData: FilterData = {
   ],
 };
 
-const defaultFilterValues = {
-  prices: [],
-  brands: [],
-  colors: [],
-  discounts: [],
-};
-
 function Filter() {
   // Think about currency affect on filter
-
-  const [filter, setFilter] = useState<FilterData>(defaultFilterValues);
+  const { filter, setFilter, showFilter, toggleFilter } = useFilter();
   const [expandFilterKeys, setExpandFilterKeys] = useState<FilterTypes[]>([]);
   const [customPrice, setCustomPrice] = useState<[number, number]>([0, 1000]);
-  const toggleFilter = (type: FilterTypes, filterItem: { id: string }) => {
+  const toggleTag = (type: FilterTypes, filterItem: { id: string }) => {
     const isExist = filter[type].find((b) => b.id === filterItem.id);
     setFilter((prev) => ({
       ...prev,
@@ -73,7 +67,18 @@ function Filter() {
   const maxFilterItems = 3;
 
   return (
-    <>
+    <motion.aside
+      initial={false}
+      animate={{
+        width: showFilter ? "24%" : 0,
+        opacity: showFilter ? 1 : 0,
+        marginRight: showFilter ? "43px" : 0,
+        padding: showFilter ? "22px" : 0,
+      }}
+      layout
+      transition={{ duration: 0.2 }}
+      className={styles.filter}
+    >
       <div className={styles.titleBlock}>
         <h3 className={styles.title}>Filters</h3>
         <Button ghost className={styles.clear} onClick={resetFilter}>
@@ -84,7 +89,7 @@ function Filter() {
         {Object.entries(filter).map(([type, items]) =>
           items.map((item) => (
             <Tag key={item.id} className={styles.tagItem}>
-              <CloseOutlined onClick={() => toggleFilter(type as FilterTypes, item)} /> {item.name}
+              <CloseOutlined onClick={() => toggleTag(type as FilterTypes, item)} /> {item.name}
             </Tag>
           )),
         )}
@@ -123,7 +128,7 @@ function Filter() {
                     gap={10}
                     align="center"
                     className={styles.menuItem}
-                    onClick={() => toggleFilter(type as FilterTypes, item)}
+                    onClick={() => toggleTag(type as FilterTypes, item)}
                   >
                     <Checkbox
                       checked={!!filter?.[type as FilterTypes].find((b) => b.id === item.id)}
@@ -139,7 +144,7 @@ function Filter() {
           ),
         }))}
       />
-    </>
+    </motion.aside>
   );
 }
 

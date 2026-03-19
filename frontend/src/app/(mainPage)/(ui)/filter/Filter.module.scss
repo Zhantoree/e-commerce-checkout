@@ -1,3 +1,11 @@
+.filter {
+  width: 24%;
+  background-color: var(--background-block);
+  overflow: hidden;
+  border-radius: var(--block-radius);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 .titleBlock {
   display: flex;
   justify-content: space-between;

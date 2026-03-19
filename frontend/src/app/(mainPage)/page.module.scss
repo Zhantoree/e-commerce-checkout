@@ -9,21 +9,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 43px;
 
   font-family: var(--font-geist-sans);
   background-color: var(--background);
-
-  .filter {
-    width: 24%;
-    padding: 22px;
-    background-color: var(--background-block);
-
-    border-radius: var(--block-radius);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-
-  .main {
-    flex: 1 1;
-  }
 }
