@@ -1,4 +1,4 @@
-import { PrismaProvider } from '@/provider/prisma.provider';
+import { PrismaService } from '@/prisma/prisma.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -41,16 +41,16 @@ const configService = {
 
 describe('TokenService', () => {
   let tokenService: TokenService;
-  let db: DeepMockProxy<PrismaProvider>;
+  let db: DeepMockProxy<PrismaService>;
   let jwtService: DeepMockProxy<JwtService>;
   let config: DeepMockProxy<ConfigService>;
   beforeEach(async () => {
-    db = mockDeep<PrismaProvider>();
+    db = mockDeep<PrismaService>();
     jwtService = mockDeep<JwtService>();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TokenService,
-        { provide: PrismaProvider, useValue: db },
+        { provide: PrismaService, useValue: db },
         { provide: JwtService, useValue: jwtService },
         { provide: ConfigService, useValue: configService },
       ],

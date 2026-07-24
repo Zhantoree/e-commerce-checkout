@@ -8,11 +8,8 @@ export class AppService {
   private prisma: PrismaClient;
 
   constructor(private config: ConfigService) {
-    const connectionString = config.get<string>('DATABASE_URL');
+    const connectionString = config.getOrThrow<string>('DATABASE_URL');
 
-    if (!connectionString) {
-      throw new Error('No db url');
-    }
     const adapter = new PrismaPg({ connectionString });
     this.prisma = new PrismaClient({ adapter });
   }

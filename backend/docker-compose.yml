@@ -1,0 +1,48 @@
+x-minio-credentials: &minio-credentials
+  MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+  MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+
+services:
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment: *minio-credentials
+    volumes:
+      - minio-data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    environment: *minio-credentials
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+
+        echo "Waiting for MinIO..."
+
+        until mc alias set local http://minio:9000 \
+          "$${MINIO_ROOT_USER}" \
+          "$${MINIO_ROOT_PASSWORD}"
+        do
+          sleep 2
+        done
+
+        echo "Creating bucket..."
+        mc mb --ignore-existing local/product-images
+
+        echo "Setting public read access..."
+        mc anonymous set download local/product-images
+
+        echo "Current policy:"
+        mc anonymous get local/product-images
+
+        echo "MinIO initialization completed"
+
+volumes:
+  minio-data:

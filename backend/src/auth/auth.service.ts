@@ -1,4 +1,4 @@
-import { PrismaProvider } from '@/provider/prisma.provider';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   ConflictException,
   Injectable,
@@ -10,16 +10,9 @@ import { TokenService } from './token/token.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly db: PrismaProvider,
+    private readonly db: PrismaService,
     private tokenService: TokenService,
   ) {}
-  async getUser({ email }) {
-    return await this.db.user.findUnique({
-      where: {
-        email,
-      },
-    });
-  }
 
   async register({
     email,

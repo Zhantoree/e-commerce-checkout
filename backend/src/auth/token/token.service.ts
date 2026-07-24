@@ -1,4 +1,4 @@
-import { PrismaProvider } from '@/provider/prisma.provider';
+import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -11,7 +11,7 @@ export const refreshAliveTimeMs = 7 * 24 * 60 * 60 * 1000;
 export class TokenService {
   constructor(
     private jwt: JwtService,
-    private db: PrismaProvider,
+    private db: PrismaService,
     private config: ConfigService,
   ) {}
 
@@ -31,6 +31,10 @@ export class TokenService {
       .createHmac('sha256', this.config.get('HMAC_TOKEN_SECRET')!)
       .update(rawToken)
       .digest('hex');
+  }
+
+  async verifyRefreshToken(rawToken: string) {
+    return this.jwt.verifyAsync(rawToken);
   }
 
   generateAccessToken(userId: number, email: string) {

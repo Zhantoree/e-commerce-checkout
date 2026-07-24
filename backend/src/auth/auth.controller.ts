@@ -1,8 +1,9 @@
+import { AuthService } from '@/auth/auth.service';
 import { CreateUserDto, LoginUserDto } from '@/user/dto/create-user.dto';
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { AuthService } from './auth.service';
 import { refreshAliveTimeMs, TokenService } from './token/token.service';
+
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -44,8 +45,7 @@ export class AuthController {
       maxAge: refreshAliveTimeMs,
       path: '/auth',
     });
-
-    return { accessToken, refreshToken };
+    return { accessToken };
   }
 
   @Post('refresh')

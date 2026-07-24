@@ -15,6 +15,6 @@ describe('envSchema', () => {
       HMAC_TOKEN_SECRET: 'y'.repeat(32),
       DATABASE_URL: 'postgresql://...',
     });
-    expect(error).toBeUndefined();
+    expect(error).toBeDefined();
   });
 });

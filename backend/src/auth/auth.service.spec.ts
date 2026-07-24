@@ -1,10 +1,10 @@
-import { PrismaProvider } from '@/provider/prisma.provider';
+import { AuthService } from '@/auth/auth.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import { AuthService } from './auth.service';
 import { TokenService } from './token/token.service';
 
 const mockedUser: User = {
@@ -20,17 +20,17 @@ const mockedUser: User = {
 
 describe('AuthService', () => {
   let authService: AuthService;
-  let db: DeepMockProxy<PrismaProvider>;
+  let db: DeepMockProxy<PrismaService>;
   let tokenService: DeepMockProxy<TokenService>;
 
   beforeEach(async () => {
-    db = mockDeep<PrismaProvider>();
+    db = mockDeep<PrismaService>();
     tokenService = mockDeep<TokenService>();
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: PrismaProvider, useValue: db },
+        { provide: PrismaService, useValue: db },
         { provide: TokenService, useValue: tokenService },
       ],
     }).compile();
@@ -71,7 +71,6 @@ describe('AuthService', () => {
         newUser.id,
         newUser.email,
       );
-      console.log('result', result);
       expect(result).toEqual({
         accessToken: 'access-token',
         refreshToken: 'refresh-token',
@@ -141,19 +140,6 @@ describe('AuthService', () => {
       expect(db.refreshToken.deleteMany).toHaveBeenCalledWith({
         where: { tokenHash: 'hashed-token' },
       });
-    });
-  });
-
-  describe('getUser', () => {
-    it('looks up a user by email', async () => {
-      db.user.findUnique.mockResolvedValue(mockedUser);
-
-      const result = await authService.getUser({ email: mockedUser.email });
-
-      expect(db.user.findUnique).toHaveBeenCalledWith({
-        where: { email: mockedUser.email },
-      });
-      expect(result).toEqual(mockedUser);
     });
   });
 });
