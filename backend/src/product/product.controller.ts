@@ -1,4 +1,4 @@
-import { AuthGuard } from '@/auth/guard/auth-jwt.guard';
+import { PublicRoute } from '@/auth/guard/auth-jwt.guard';
 import {
   BadRequestException,
   Controller,
@@ -8,13 +8,12 @@ import {
   Req,
   Res,
   UploadedFile,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductService } from './product.service';
 
-@UseGuards(AuthGuard)
+@PublicRoute()
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

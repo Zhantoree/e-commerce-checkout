@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/guard/auth-jwt.guard';
 import { HttpExceptionFilter } from './common/exceptions/http.filter';
 import { envSchema } from './config/env.validation';
 import { PrismaModule } from './prisma/prisma.module';
@@ -27,6 +28,7 @@ import { UserModule } from './user/user.module';
   providers: [
     AppService,
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
+    { provide: APP_GUARD, useClass: AuthGuard },
   ],
 })
 export class AppModule {}
